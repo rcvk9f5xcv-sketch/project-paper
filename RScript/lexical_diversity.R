@@ -16,19 +16,19 @@ for(f in files){
   corp <- corpus(text)
   toks <- tokens(corp, remove_punct = TRUE, remove_symbols = TRUE)
   
-  mtld_value <- as.numeric(textstat_lexdiv(toks, measure = "MATTR")$MATTR)
+  mattr_value <- as.numeric(textstat_lexdiv(toks, measure = "MATTR")$MATTR)
   
   lex_results <- rbind(lex_results,
                        data.frame(Autor = autor,
                                   Segment = basename(f),
-                                  MTLD = mtld_value))
+                                  MATTR = mattr_value))
 }
 
-summary_results <- aggregate(MTLD ~ Autor, data = lex_results,
+summary_results <- aggregate(MATTR ~ Autor, data = lex_results,
                              FUN = function(x) c(Mean = mean(x), SD = sd(x)))
 
 summary_results <- do.call(data.frame, summary_results)
-colnames(summary_results) <- c("Autor", "Mean_MTLD", "SD_MTLD")
+colnames(summary_results) <- c("Autor", "Mean_MATTR", "SD_MATTR")
 
 dir.create("lexical_diversity", showWarnings = FALSE)
 
